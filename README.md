@@ -29,3 +29,42 @@ rosservice call InfoRObot
 
 For know the information about the distance from robot to goal and the average speed of the robot you can use the service /InfoRobot calling in the terminal
 rosservice call InfoRobot
+
+
+# Assignment 2 Research Track
+
+This project is based on the use of ROS and Python. The main task involves writing a node and two service nodes that interact with a system provided by the professor. The system consists of a robot with some sensors and an arena. The robot is simulated using Gazebo and RViz for motion simulation. The robot is a non-holonomic robot, capable of moving along its x-axis and rotating around its z-axis.
+
+My implementation includes:
+
+- In the first node, the user can send a goal to the robot, and the robot starts moving towards it, providing information about the state. It notifies when the goal is reached. This node subscribes to the topic `/odom` to capture the robot's position and velocity (x, y, x_vel, z_vel) using a custom message called `RobotInfo`. This node also publishes this custom message on a topic called `/robot_info`.
+
+- The service node `LastTrgPos_server`, when called, returns the coordinates of the last target sent by the user.
+
+- The service node `InfoRobot_server` returns, upon calling, the distance of the robot relative to the goal and the average robot speed considering a certain window of values.
+
+## Installation
+
+For installation, clone this git repository inside the `src` folder of the ROS workspace. After cloning, switch to the master branch:
+
+```bash
+git checkout master
+```
+Before running the code, it's important to install the xterm package using the following commands:
+
+```bash
+sudo apt update
+sudo apt install xterm
+```
+After installing xterm, in the srv folder of the ROS workspace, run the command catkin_make. This command will build all the executable files in the repository.
+
+At this point, Gazebo and RViz will open, allowing you to see the arena with the robot and the data coming from sensors in RViz.
+
+Another terminal, xterm, will also open, in which you can follow the instructions to add a goal. After adding the goal for the first time, you can either delete it or change it.
+
+While the simulator is running, you can use the two services. To get information about the last inserted goal, you can use the service /LastTrgPos by calling:
+
+```bash
+rosservice call LastTrgPos
+```
+
