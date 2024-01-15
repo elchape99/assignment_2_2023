@@ -79,6 +79,6 @@ rosservice call InfoRobot
 
 For entering in the detail of the first node create `target_client.py` here there is a flowchart about the working of this node:
 
-![target_client.py workflow ](Untitled Diagram.drawio.png)
+![target_client.py workflow ](Untitled_Diagram_drawio.png)
 
 
