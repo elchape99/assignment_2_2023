@@ -45,11 +45,7 @@ My implementation includes:
 
 ## Installation
 
-For installation, clone this git repository inside the `src` folder of the ROS workspace. After cloning, switch to the master branch:
-
-```bash
-git checkout master
-```
+For installation, clone this git repository inside the `src` folder of the ROS workspace.
 Before running the code, it's important to install the xterm package using the following commands:
 
 ```bash
@@ -57,6 +53,13 @@ sudo apt update
 sudo apt install xterm
 ```
 After installing xterm, in the srv folder of the ROS workspace, run the command catkin_make. This command will build all the executable files in the repository.
+
+Now for running the program need to launch the launch file:
+
+```bash
+roslaunch assignment_2_2323.launch assignment1.launch
+```
+
 
 At this point, Gazebo and RViz will open, allowing you to see the arena with the robot and the data coming from sensors in RViz.
 
@@ -67,4 +70,15 @@ While the simulator is running, you can use the two services. To get information
 ```bash
 rosservice call LastTrgPos
 ```
+
+For knowin information about the distanche between the robot and goal, and the average speed in window of 10 mesurement is possible to call the service /InfoRobot. Is possible to change the size of the windows in the launch file assignemnt1.launch inside the launch folder.
+
+```bash
+rosservice call InfoRobot
+```
+
+For entering in the detail of the first node create `target_client.py` here there is a flowchart about the working of this node:
+
+![target_client.py workflow ](Untitled Diagram.drawio.png)
+
 
