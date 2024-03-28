@@ -57,7 +57,7 @@ After installing xterm, in the srv folder of the ROS workspace, run the command 
 Now for running the program need to launch the launch file:
 
 ```bash
-roslaunch assignment_2_2323.launch assignment1.launch
+roslaunch assignment_2_2023 assignment1.launch
 ```
 
 
