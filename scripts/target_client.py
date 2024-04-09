@@ -125,9 +125,7 @@ def main():
 
         # create the SimpleActionClient, passing the type of action
         global client, sub, pub
-        client = actionlib.SimpleActionClient(
-            "/reaching_goal", assignment_2_2023.msg.PlanningAction
-        )
+        client = actionlib.SimpleActionClient("/reaching_goal", assignment_2_2023.msg.PlanningAction)
         sub = rospy.Subscriber("/odom", Odometry, callback)
         pub = rospy.Publisher("/robot_info", RobotInfo, queue_size=1)
         target_client()
