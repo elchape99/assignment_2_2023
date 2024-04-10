@@ -13,13 +13,12 @@ My implementation includes:
 ## Installation
 
 For installation, clone this git repository inside the `src` folder of the ROS workspace.
-Before running the code, it's important to install the xterm package using the following commands:
 
 After clone the folder in the src folder, is importan to to change the name of the folder cloned. The name is to change with this:
 ```bash
 assignment_2_2023
 ```
-
+Before running the code, it's important to update all the packages installed and install the xterm package using the following commands:
 
 ```bash
 sudo apt update
