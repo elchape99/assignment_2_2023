@@ -56,7 +56,7 @@ After installing xterm, in the srv folder of the ROS workspace, run the command 
 ```bash
 roslaunch assignment_2_2023 assignment1.launch
 ```
-
+## Use
 
 At this point, Gazebo and RViz will open, allowing you to see the arena with the robot and the data coming from sensors in RViz.
 
