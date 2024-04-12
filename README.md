@@ -12,13 +12,33 @@ My implementation includes:
 
 ## Installation
 
-For installation, clone this git repository inside the `src` folder of the ROS workspace.
+- In the case of my project I develop all the code using the docker image. If use the same docker immage follow these followiong passage, if not skip to the part of cloning repository
+```bash
+docker pull carms84/noetic_ros2
+```
 
-After clone the folder in the src folder, is importan to to change the name of the folder cloned. The name is to change with this:
+- For run the docker image I use the command line in the bash:
+```bash
+docker run -it --name my_ros -p 6080:80 -p 5900:5900 carms84/noetic_ros2
+```
+
+- After this passage, if use the docker image, have to write inside the `.bashrc` file the following line of code, at the end of file:
+```bash
+source /opt/ros/noetic/setup.bash
+```
+
+Now is possible to clone this git repository inside the `src` folder of the ROS workspace. (This passage for everyone, using or not the docker image)
+
+- After clone the folder in the src folder, is importan to to change the name of the folder cloned. The name is to change with this:
 ```bash
 assignment_2_2023
 ```
-Before running the code, it's important to update all the packages installed and install the xterm package using the following commands:
+
+- Only for who use the docker image, write this row of code inide the `.bashrc` file
+```bash
+source ~/my_ros/devel/setup.bash
+```
+- Before running the code, it's important to update all the packages installed and install the xterm package using the following commands:
 
 ```bash
 sudo apt update
@@ -26,7 +46,7 @@ sudo apt install xterm
 ```
 After installing xterm, in the srv folder of the ROS workspace, run the command catkin_make. This command will build all the executable files in the repository.
 
-Now for running the program need to launch the launch file:
+- Now for running the program need to launch the launch file:
 
 ```bash
 roslaunch assignment_2_2023 assignment1.launch
