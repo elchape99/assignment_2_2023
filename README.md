@@ -24,7 +24,7 @@ docker run -it --name my_ros -p 6080:80 -p 5900:5900 carms84/noetic_ros2
 
 - However in this case we should start a brand new container, by also forwarding port 8888:
 ```bash
-dockerrun -it --name my_jupyter -p 6080:80 -p 5900:5900 -p 8888:8888 carms84/noetic_ros2
+docker run -it --name my_jupyter -p 6080:80 -p 5900:5900 -p 8888:8888 carms84/noetic_ros2
 ```
 
 - After this passage, if use the docker image, have to write inside the `.bashrc` file the following line of code, at the end of file:
