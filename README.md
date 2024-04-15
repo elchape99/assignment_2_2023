@@ -24,7 +24,7 @@ docker run -it --name my_ros -p 6080:80 -p 5900:5900 carms84/noetic_ros2
 
 - However in this case we should start a brand new container, by also forwarding port 8888:
 ```bash
-dockerrun -it --name my_jupyter -p 6080:80 -p 5900:5900 -p 8888:8888 carms84/noetic_ros2
+docker run -it --name my_jupyter -p 6080:80 -p 5900:5900 -p 8888:8888 carms84/noetic_ros2
 ```
 
 - After this passage, if use the docker image, have to write inside the `.bashrc` file the following line of code, at the end of file:
@@ -57,7 +57,7 @@ After installing xterm, in the srv folder of the ROS workspace, run the command 
 roslaunch assignment_2_2023 assignment1.launch
 ```
 ## Use
-
+ùThis section is different if we are using the first 
 At this point, Gazebo and RViz will open, allowing you to see the arena with the robot and the data coming from sensors in RViz.
 
 Another terminal, xterm, will also open, in which you can follow the instructions to add a goal. After adding the goal for the first time, you can either delete it or change it.
