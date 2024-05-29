@@ -1,5 +1,27 @@
 #! /usr/bin/env python3
 
+## @package assignment_2_2023
+#
+# \file InfoRobot_server.py
+# \brief This file contains the implementation of the server for the service InfoRobot
+# \author Andrea Chiappe
+# \version 0.1
+# \date 2024-05-29
+#
+# Subscribes to: <BR>
+#    /reaching_goal/goal <BR>
+#    /robot_info <BR>
+#
+# Publishes to: <BR>
+#    None <BR>
+#
+# Services: <BR>
+#    /InfoRobot <BR>
+#
+# Description: <BR>
+# This node contains the implementation of ascubscriber to the position and velocity of the robot. 
+# and a subscriber to the position of the target.
+# This node implements a server that to retreive the distance between the robot and the target and the average velocity of the robot. 
 import rospy
 import math
 import assignment_2_2023.msg
@@ -14,6 +36,9 @@ robot_vel_z = [] # array with the anguar velocity
 window = None # window size
 
 def update_arr(array, window, element):
+    ##
+    # \brief Update the array with the new element
+    # \param array list of element
     if(len(array) < window):
         array.append(element)
     else:
@@ -21,6 +46,9 @@ def update_arr(array, window, element):
         array.pop(0)
 
 def srvCallback(req):
+    ## 
+    # \brief Callback for the service InfoRobot
+    # \param req request for the service 
     global goal_pose, robot_pose, robot_vel_x, robot_vel_z, window
     try:
         # compute the distance between the goal and robot
@@ -42,6 +70,10 @@ def srvCallback(req):
 
 
 def sub_goalCallback(msg):
+    ## 
+    # \brief Callback for the subscriber to the goal
+    # \param msg message from the topic
+    
     global goal_pose
     try:
         # I subscribe to the publisher /reaching_goal/goal
@@ -52,6 +84,10 @@ def sub_goalCallback(msg):
         rospy.logerr(f"An error occurred in sub_goalCallback: {str(e)}")
 
 def sub_robotCallback(msg):
+    ## 
+    # \brief Callback for the subscriber to the robot
+    # \param msg message from the topic
+    
     global robot_pose, robot_vel_x, robot_vel_z, window
     try:
         # update all the values inside the global variable
@@ -65,6 +101,8 @@ def sub_robotCallback(msg):
 
 
 def last_target_server():
+    ## 
+    # \brief Main function to initialize the server
     global service, window
     #initialize the service 
     rospy.init_node("InfoRobot_server")

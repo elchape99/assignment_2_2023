@@ -1,17 +1,49 @@
 #! /usr/bin/env python
 
+## @package assignment_2_2023
+#
+# \file target_client.py
+# \brief This node is the client of the action server, it sends the goal to the server and it can delete the goal or set a new one
+# \author Andrea Chiappe
+# \version 0.1
+# \date 2024-05-29
+# \details 
+#
+# Subscribes to: <BR>
+#    /odom <BR>
+#
+# Publishes to: <BR>
+#   /robot_info <BR>
+#
+# Clients: <BR>
+#  /reaching_goal <BR>
+#
+# Description: <BR>
+# This node is the client of the action server, it sends the goal to the server and it can delete the goal or set a new one. 
+# The user can decide to delete the actual goal or set a new one. 
+# The user can also decide to set a new goal or not. 
+# The user can insert the coordinates of the target to reach. 
+# The node sends the goal to the action server and prints the coordinates of the target to reach. 
+# The node prints if the goal is reached or not. The node also prints if the goal is deleted or not
+#
+
+
 import rospy
 import actionlib
 import assignment_2_2023
 from nav_msgs.msg import Odometry
 from assignment_2_2023.msg import PlanningAction, RobotInfo
 
-client = None
-sub = None
-pub = None
+client = None ## \var client is the client of the action server
+sub = None ## \var sub is the subscriber of the topic /odom
+pub = None ## \var pub is the publisher on topic /robot_info
 
 
 def callback(msg):
+    ##
+    # \brief This function is the callback of the subscriber /odom
+    # \param msg is the message of the subscriber
+    
     global pub
     # declare the mesage i want to publish
     msg_robot = RobotInfo()
@@ -25,7 +57,8 @@ def callback(msg):
 
 
 def input_cord():
-    # function for input the cordinate
+    ##
+    # \brief This function is used to input the coordinates of the target to reach
     while True:
         try:
             x = float(input("Insert x coordinate (float): "))
@@ -37,8 +70,11 @@ def input_cord():
 
 
 def get_user_deleteGoal():
-    #return true if the user wants to delete the actual goal
-    #return false if the user wants to insert a new target 
+    ##
+    # \brief This function is used to get the user input to delete the actual goal or set a new one
+    # \return True if the user wants to delete the actual goal
+    # \return False if the user wants to insert a new target
+   
     while True:
         user_input = input("Do you want to delete the actual goal (press 1) or insert a new target (press 2)")
         if user_input == "1":
@@ -49,6 +85,11 @@ def get_user_deleteGoal():
             print("Insert a correct key, press 1 or 2")
 
 def set_user_newGoal():
+    ##
+    # \brief This function is used to get the user input to set a new goal or not
+    # \return True if the user wants to set a new goal
+    # \return False if the user doesn't want to set a new goal
+    
     while True:
         user_input = input("Do you want to set a new Goal [y/n] ")
         if user_input == "y":
@@ -60,6 +101,17 @@ def set_user_newGoal():
 
 
 def target_client():
+    ##
+    # \brief This function is the main function of the node
+    # \details
+    # wait until the server process has started
+    # if the user insert a new goal it send to the server
+    # if the user wants to delete the actual goal it cancels the goal
+    # if the user wants to insert a new target to reach it sends the new goal to the server
+    # if the goal is reached it prints the message
+    # if the goal is not reached it prints the message
+    # if the goal is deleted it prints the message
+
     global client
     coords_old = [None, None]
     # wait until the server process has started
