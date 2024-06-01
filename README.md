@@ -95,7 +95,7 @@ jupyter notebook --allow-root --ip 0.0.0.0
 ```
 
 Now open a browser on the host and go to:
-`http://localhost:8888`
+http://localhost:8888
 
 ## Documentation about rt1_assignemnt_1
 In this specific case the work is not related to the previous part but related to the part of research track 1. So this section will contain all the documentation about the python code od the assignemt 1. The documentation is seen in the following link
