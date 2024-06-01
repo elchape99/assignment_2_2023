@@ -1,0 +1,122 @@
+\hypertarget{target__client_8py}{}\doxysection{scripts/target\+\_\+client.py File Reference}
+\label{target__client_8py}\index{scripts/target\_client.py@{scripts/target\_client.py}}
+
+
+This node is the client of the action server, it sends the goal to the server and it can delete the goal or set a new one.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{target__client_8py_ad29506c72bc754f345913490065c3a89}{target\+\_\+client.\+callback}} (msg)
+\begin{DoxyCompactList}\small\item\em This function is the callback of the subscriber /odom. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{target__client_8py_a3092bf79a62d1e67d812206216f2ba97}\label{target__client_8py_a3092bf79a62d1e67d812206216f2ba97}} 
+def \mbox{\hyperlink{target__client_8py_a3092bf79a62d1e67d812206216f2ba97}{target\+\_\+client.\+input\+\_\+cord}} ()
+\begin{DoxyCompactList}\small\item\em This function is used to input the coordinates of the target to reach. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{target__client_8py_a2f4c85b38981404c9175bcd357d86872}{target\+\_\+client.\+get\+\_\+user\+\_\+delete\+Goal}} ()
+\begin{DoxyCompactList}\small\item\em This function is used to get the user input to delete the actual goal or set a new one. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{target__client_8py_a68699c497326f0fbd81bfe9e6459f5c0}{target\+\_\+client.\+set\+\_\+user\+\_\+new\+Goal}} ()
+\begin{DoxyCompactList}\small\item\em This function is used to get the user input to set a new goal or not. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{target__client_8py_ae76a76b7bcb4c86fe8362a0d893fcac1}{target\+\_\+client.\+target\+\_\+client}} ()
+\begin{DoxyCompactList}\small\item\em This function is the main function of the node. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{target__client_8py_af2ec59731d18ce544dd90eedfef92533}\label{target__client_8py_af2ec59731d18ce544dd90eedfef92533}} 
+def {\bfseries target\+\_\+client.\+main} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{target__client_8py_a3dab3bfd00afa66839a363e87d33c7ab}\label{target__client_8py_a3dab3bfd00afa66839a363e87d33c7ab}} 
+{\bfseries target\+\_\+client.\+client} = None
+\item 
+\mbox{\Hypertarget{target__client_8py_a293004c4dcf65657ea5192d24ba01d3f}\label{target__client_8py_a293004c4dcf65657ea5192d24ba01d3f}} 
+{\bfseries target\+\_\+client.\+sub} = None
+\item 
+\mbox{\Hypertarget{target__client_8py_a98388cad90059cf9f247c17e9bb9aa79}\label{target__client_8py_a98388cad90059cf9f247c17e9bb9aa79}} 
+{\bfseries target\+\_\+client.\+pub} = None
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This node is the client of the action server, it sends the goal to the server and it can delete the goal or set a new one. 
+
+\begin{DoxyAuthor}{Author}
+Andrea Chiappe 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2024-\/05-\/29
+\end{DoxyDate}
+Subscribes to\+: ~\newline
+ /odom ~\newline
+
+
+Publishes to\+: ~\newline
+ /robot\+\_\+info ~\newline
+
+
+Clients\+: ~\newline
+ /reaching\+\_\+goal ~\newline
+
+
+Description\+: ~\newline
+ This node is the client of the action server, it sends the goal to the server and it can delete the goal or set a new one. The user can decide to delete the actual goal or set a new one. The user can also decide to set a new goal or not. The user can insert the coordinates of the target to reach. The node sends the goal to the action server and prints the coordinates of the target to reach. The node prints if the goal is reached or not. The node also prints if the goal is deleted or not 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{target__client_8py_ad29506c72bc754f345913490065c3a89}\label{target__client_8py_ad29506c72bc754f345913490065c3a89}} 
+\index{target\_client.py@{target\_client.py}!callback@{callback}}
+\index{callback@{callback}!target\_client.py@{target\_client.py}}
+\doxysubsubsection{\texorpdfstring{callback()}{callback()}}
+{\footnotesize\ttfamily def target\+\_\+client.\+callback (\begin{DoxyParamCaption}\item[{}]{msg }\end{DoxyParamCaption})}
+
+
+
+This function is the callback of the subscriber /odom. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & is the message of the subscriber \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{target__client_8py_a2f4c85b38981404c9175bcd357d86872}\label{target__client_8py_a2f4c85b38981404c9175bcd357d86872}} 
+\index{target\_client.py@{target\_client.py}!get\_user\_deleteGoal@{get\_user\_deleteGoal}}
+\index{get\_user\_deleteGoal@{get\_user\_deleteGoal}!target\_client.py@{target\_client.py}}
+\doxysubsubsection{\texorpdfstring{get\_user\_deleteGoal()}{get\_user\_deleteGoal()}}
+{\footnotesize\ttfamily def target\+\_\+client.\+get\+\_\+user\+\_\+delete\+Goal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function is used to get the user input to delete the actual goal or set a new one. 
+
+\begin{DoxyReturn}{Returns}
+True if the user wants to delete the actual goal 
+
+False if the user wants to insert a new target 
+\end{DoxyReturn}
+\mbox{\Hypertarget{target__client_8py_a68699c497326f0fbd81bfe9e6459f5c0}\label{target__client_8py_a68699c497326f0fbd81bfe9e6459f5c0}} 
+\index{target\_client.py@{target\_client.py}!set\_user\_newGoal@{set\_user\_newGoal}}
+\index{set\_user\_newGoal@{set\_user\_newGoal}!target\_client.py@{target\_client.py}}
+\doxysubsubsection{\texorpdfstring{set\_user\_newGoal()}{set\_user\_newGoal()}}
+{\footnotesize\ttfamily def target\+\_\+client.\+set\+\_\+user\+\_\+new\+Goal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function is used to get the user input to set a new goal or not. 
+
+\begin{DoxyReturn}{Returns}
+True if the user wants to set a new goal 
+
+False if the user doesn\textquotesingle{}t want to set a new goal 
+\end{DoxyReturn}
+\mbox{\Hypertarget{target__client_8py_ae76a76b7bcb4c86fe8362a0d893fcac1}\label{target__client_8py_ae76a76b7bcb4c86fe8362a0d893fcac1}} 
+\index{target\_client.py@{target\_client.py}!target\_client@{target\_client}}
+\index{target\_client@{target\_client}!target\_client.py@{target\_client.py}}
+\doxysubsubsection{\texorpdfstring{target\_client()}{target\_client()}}
+{\footnotesize\ttfamily def target\+\_\+client.\+target\+\_\+client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function is the main function of the node. 
+
+wait until the server process has started if the user insert a new goal it send to the server if the user wants to delete the actual goal it cancels the goal if the user wants to insert a new target to reach it sends the new goal to the server if the goal is reached it prints the message if the goal is not reached it prints the message if the goal is deleted it prints the message 
