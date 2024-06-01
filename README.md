@@ -81,9 +81,15 @@ For entering in the detail of the first node create `target_client.py` here ther
 
 # Research Track II
 
+
+## Documentation about rt1_assignemnt_1 (Assignment1_ RT2)
+In this specific case the work is not related to the previous part but related to the part of research track 1. So this section will contain all the documentation about the python code od the assignemt 1. The documentation is seen in the following link:\
+https://elchape99.github.io/rt1_assignment_2/
+
+
+## User interface (Assignment2_RT2)
 This project is based on the working done in the Last semester assignment, so based on all the topic seen in the upper part of the README.\\
 Resoect the previous pare I have added:
-## User interface
 - file `Assignment2.ipynb` that contain a jupyter node that implement a user inteface, allowing the user to send new goal, delete goal, and showing some details about the story of goal sended and deleted.\\
 
 ### How to run it
@@ -94,10 +100,6 @@ For running the node:
 jupyter notebook --allow-root --ip 0.0.0.0
 ```
 
-Now open a browser on the host and go to:
+Now open a browser on the host and go to:\\
 http://localhost:8888
-
-## Documentation about rt1_assignemnt_1
-In this specific case the work is not related to the previous part but related to the part of research track 1. So this section will contain all the documentation about the python code od the assignemt 1. The documentation is seen in the following link
-
 
