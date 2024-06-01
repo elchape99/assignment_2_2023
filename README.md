@@ -33,11 +33,16 @@ source /opt/ros/noetic/setup.bash
 ```
 
 Now is possible to clone this git repository inside the `src` folder of the ROS workspace. (This passage for everyone, using or not the docker image)
-
-- After clone the folder in the src folder, is importan to to change the name of the folder cloned. The name is to change with this:
 ```bash
-assignment_2_2023
+git clone https://github.com/elchape99/rt1_assignment_2.git
 ```
+
+- After clone the folder in the src folder, is importan to to change the name of the folder cloned. The name is to change
+from:
+- rt1_assignment_2
+to:
+- assignment_2_2023
+
 
 - Only for who use the docker image, write this row of code inide the `.bashrc` file
 ```bash
@@ -57,7 +62,7 @@ After installing xterm, in the srv folder of the ROS workspace, run the command 
 roslaunch assignment_2_2023 assignment1.launch
 ```
 ## Use
-ùThis section is different if we are using the first 
+This section is different if we are using the first 
 At this point, Gazebo and RViz will open, allowing you to see the arena with the robot and the data coming from sensors in RViz.
 
 Another terminal, xterm, will also open, in which you can follow the instructions to add a goal. After adding the goal for the first time, you can either delete it or change it.
