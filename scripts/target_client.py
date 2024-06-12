@@ -32,28 +32,58 @@ import rospy
 import actionlib
 import assignment_2_2023
 from nav_msgs.msg import Odometry
-from assignment_2_2023.msg import PlanningAction, RobotInfo
+from sensor_msge.msg import LaserScan
+from assignment_2_2023.msg import PlanningAction, RobotInfo, Dist
+from assignment_2_2023.srv import LastTrgPos, InfoRobot
 
+# creates a goal to send to the action server
+goal = assignment_2_2023.msg.PlanningGoal()
+    
 client = None ## \var client is the client of the action server
-sub = None ## \var sub is the subscriber of the topic /odom
-pub = None ## \var pub is the publisher on topic /robot_info
+odom_sub = None ## \var sub is the subscriber of the topic /odom
+info_pub = None ## \var pub is the publisher on topic /robot_info
 
 
-def callback(msg):
+def odomCallback(msg):
     ##
     # \brief This function is the callback of the subscriber /odom
     # \param msg is the message of the subscriber
     
-    global pub
+    global info_pub
     # declare the mesage i want to publish
     msg_robot = RobotInfo()
     # assign the value msg_robot
-    msg_robot.x = msg.pose.pose.position.x
+    msg_robot.x = msg.pose.pose.position.x 
     msg_robot.y = msg.pose.pose.position.y
     msg_robot.x_vel = msg.twist.twist.linear.x
     msg_robot.z_vel = msg.twist.twist.angular.z
     # publish the message
-    pub.publish(msg_robot)
+    info_pub.publish(msg_robot)
+    
+'''  
+def laserCallback(msg):
+    ##
+    # \brief This function is the callback of the subscriber /scan
+    # \param msg is the message of the subscriber
+    distance = (req.x**2 + req.y**2 + req.z**2)**0.5
+    dist = DistObj()
+    dist.distance = distance
+    dist_pub.publish(dist)    
+   ''' 
+
+def targetPosition():
+    ##
+    # \brief This function is used to get the last target position
+    # \return the last target position
+    
+    global pose
+    rospy.wait_for_service("last_trg_pose")
+    pos_proxy = rospy.ServiceProxy('last_trg_pose', LastTrgPos)
+    try:
+        pose = pos_proxy() 
+        print (f'the last target ppsition was X: ', pose.x, 'Y: ', pose.y)
+    except rospy.ServiceException as e:
+        print(f"Service call failed: {e}")
 
 
 def input_cord():
@@ -67,6 +97,19 @@ def input_cord():
             return x, y
         except ValueError:
             print("Error: Please enter valid floating-point numbers.")
+            
+            
+def send_goal_and_log(coords):
+    ##
+    # \brief This function is used to send the goal to the action server and print the coordinates of the target to reach
+    
+    global goal
+    goal.target_pose.pose.position.x = coords[0]
+    goal.target_pose.pose.position.y = coords[1]
+    # Send goal to the action server
+    client.send_goal(goal)
+    #print to screen the coordinate of the target to reach
+    rospy.loginfo("You sent the goal with: X = %f, Y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
 
 def get_user_deleteGoal():
@@ -83,6 +126,7 @@ def get_user_deleteGoal():
             return False
         else:
             print("Insert a correct key, press 1 or 2")
+
 
 def set_user_newGoal():
     ##
@@ -112,26 +156,19 @@ def target_client():
     # if the goal is not reached it prints the message
     # if the goal is deleted it prints the message
 
-    global client
+    global client, goal
     coords_old = [None, None]
     # wait until the server process has started
     client.wait_for_server()
-    # creates a goal to send to the action server
-    goal = assignment_2_2023.msg.PlanningGoal()
-    
+  
     while not rospy.is_shutdown():
         # first round there is no goal, the user could decide to set a new goal
         if coords_old[0] is None or coords_old[1] is None:
             # first round there is no goal, the user could decide to set a new goal
             if set_user_newGoal(): #is true if user decide to set a new goal
-                #this function retur the coordinat setted by user
+                #this function retur the coordinate setted by user
                 coords = input_cord()
-                goal.target_pose.pose.position.x = coords[0]
-                goal.target_pose.pose.position.y = coords[1]
-                # Send goal to the action server
-                client.send_goal(goal)
-                #print to screen the coordinate of the target to reach
-                rospy.loginfo("You sent the goal with: X = %f, Y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+                send_goal_and_log(coords)
                 # update the variable for the control of next loop
                 coords_old = coords
             else:
@@ -145,15 +182,13 @@ def target_client():
                 else:
                     print("the goal is already deleted, press y and add a new goal")
                 if set_user_newGoal(): #true if the user want to set a new goal after delete the last one
+                    targetPosition()
                     coords = input_cord()
-                    goal.target_pose.pose.position.x = coords[0]
-                    goal.target_pose.pose.position.y = coords[1]
-                    # Send goal to the action server
-                    client.send_goal(goal)
-                    #prin to screen the new coordinate of the target
-                    rospy.loginfo("You sent the goal with: X = %f, Y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+                    send_goal_and_log(coords)
+                    # update the variable for the control of next loop
                     coords_old = coords  
-            else :#user wants to insert a new target to reach         
+            else :#user wants to insert a new target to reach   
+                targetPosition()      
                 coords = input_cord()
                 goal.target_pose.pose.position.x = coords[0]
                 goal.target_pose.pose.position.y = coords[1]
@@ -176,10 +211,12 @@ def main():
         rospy.init_node("trg_client")
 
         # create the SimpleActionClient, passing the type of action
-        global client, sub, pub
+        global client, odom_sub, info_pub
         client = actionlib.SimpleActionClient("/reaching_goal", assignment_2_2023.msg.PlanningAction)
-        sub = rospy.Subscriber("/odom", Odometry, callback)
-        pub = rospy.Publisher("/robot_info", RobotInfo, queue_size=1)
+        odom_sub = rospy.Subscriber("/odom", Odometry, odomCallback)
+        info_pub = rospy.Publisher("/robot_info", RobotInfo, queue_size = 1)
+        laser_sub = rospy.Subscriber("/scan", LaserScan, laserCallback)
+        dist_pub = rospy.Publisher("/dist", DistObj, queque_size = 1)
         target_client()
 
     except Exception as e:
