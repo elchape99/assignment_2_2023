@@ -32,8 +32,8 @@ import rospy
 import actionlib
 import assignment_2_2023
 from nav_msgs.msg import Odometry
-from sensor_msge.msg import LaserScan
-from assignment_2_2023.msg import PlanningAction, RobotInfo, Dist
+from sensor_msgs.msg import LaserScan
+from assignment_2_2023.msg import PlanningAction, RobotInfo, DistObj
 from assignment_2_2023.srv import LastTrgPos, InfoRobot
 
 # creates a goal to send to the action server
@@ -42,6 +42,8 @@ goal = assignment_2_2023.msg.PlanningGoal()
 client = None ## \var client is the client of the action server
 odom_sub = None ## \var sub is the subscriber of the topic /odom
 info_pub = None ## \var pub is the publisher on topic /robot_info
+dist_pub = None ## \var pub is the publisher on topic /dist
+pose = None 
 
 
 def odomCallback(msg):
@@ -59,17 +61,19 @@ def odomCallback(msg):
     msg_robot.z_vel = msg.twist.twist.angular.z
     # publish the message
     info_pub.publish(msg_robot)
-'''  
+    
+
 def laserCallback(msg):
     ##
     # \brief This function is the callback of the subscriber /scan
     # \param msg is the message of the subscriber
-    distance = (req.x**2 + req.y**2 + req.z**2)**0.5
-    dist = DistObj()
-    dist.distance = distance
-    dist_pub.publish(dist)    
-   ''' 
-
+    
+    global dist_pub
+    dist = 1 # (msg.x2 + msg.y**2 + msg.z**2)**0.5
+    result = DistObj()
+    result.distance = dist
+    dist_pub.publish(result)    
+ 
 
 def targetPosition():
     ##
@@ -211,12 +215,12 @@ def main():
         rospy.init_node("trg_client")
 
         # create the SimpleActionClient, passing the type of action
-        global client, odom_sub, info_pub
+        global client, odom_sub, info_pub, dist_pub
         client = actionlib.SimpleActionClient("/reaching_goal", assignment_2_2023.msg.PlanningAction)
         odom_sub = rospy.Subscriber("/odom", Odometry, odomCallback)
         info_pub = rospy.Publisher("/robot_info", RobotInfo, queue_size = 1)
         laser_sub = rospy.Subscriber("/scan", LaserScan, laserCallback)
-        dist_pub = rospy.Publisher("/dist", DistObj, queque_size = 1)
+        dist_pub = rospy.Publisher("/dist", DistObj, queue_size = 1)
         target_client()
 
     except Exception as e:
