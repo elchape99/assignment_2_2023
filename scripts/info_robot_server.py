@@ -105,11 +105,11 @@ def last_target_server():
     # \brief Main function to initialize the server
     global service, window
     #initialize the service 
-    rospy.init_node("InfoRobot_server")
+    rospy.init_node("info_robot_server")
     window= rospy.get_param("/ws_size")
 
-    service = rospy.Service('/InfoRobot', InfoRobot, srvCallback)
-    rospy.loginfo("Service InfoRobot is ready")
+    service = rospy.Service('/info_robot', InfoRobot, srvCallback)
+    rospy.loginfo("Service info_robot is ready")
     # nee to subscribe to reach_goal/goal for see the information about the goal
     sub_goal = rospy.Subscriber("/reaching_goal/goal", PlanningActionGoal, sub_goalCallback)
     sub_robot = rospy.Subscriber("/robot_info", RobotInfo, sub_robotCallback)

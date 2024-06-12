@@ -30,6 +30,7 @@
 
 import rospy
 import actionlib
+import math
 import assignment_2_2023
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
@@ -69,10 +70,17 @@ def laserCallback(msg):
     # \param msg is the message of the subscriber
     
     global dist_pub
-    dist = 1 # (msg.x2 + msg.y**2 + msg.z**2)**0.5
+    # Calcola la distanza minima tra tutte le distanze rilevate
+    min_dist = min(msg.ranges)
+    # Assicurati che la distanza minima sia all'interno dei limiti effettivi del sensore
+    if min_dist < msg.range_min:
+        min_dist = msg.range_min
+    elif min_dist > msg.range_max:
+        min_dist = msg.range_max
+    
     result = DistObj()
-    result.distance = dist
-    dist_pub.publish(result)    
+    result.distance = min_dist
+    dist_pub.publish(result)
  
 
 def targetPosition():
