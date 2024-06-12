@@ -52,8 +52,8 @@ def last_target_server():
 
     global service
     #initialize the service 
-    rospy.init_node("LastTrgPos_server")
-    service = rospy.Service('/LastTrgPos', LastTrgPos, srvCallback )
+    rospy.init_node("last_trg_pose_server")
+    service = rospy.Service('/last_trg_pose', LastTrgPos, srvCallback )
     rospy.loginfo("Service LastTrgPos is ready")
     # nee to subscribe to reach_goal/goal for see the information about the goal
     sub = rospy.Subscriber("/reaching_goal/goal", PlanningActionGoal, subCallback)
